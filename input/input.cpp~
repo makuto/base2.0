@@ -1,0 +1,21 @@
+#include "input.hpp"
+inputManager::inputManager(sf::RenderWindow *newWin)
+{
+	win=newWin;
+}
+int inputManager::getMouseX()
+{
+    return sf::Mouse::getPosition(*win).x;
+}
+int inputManager::getMouseY()
+{
+    return sf::Mouse::getPosition(*win).x;
+}
+bool inputManager::isPressed(sf::Keyboard::Key key)
+{
+    return sf::Keyboard::isKeyPressed(key);
+}
+bool inputManager::isMousePressed(sf::Mouse::Button button)
+{
+    return in->IsMouseButtonDown(button);
+}

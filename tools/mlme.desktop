@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Exec=gnome-terminal -e "/usr/bin/multilayerMapEditor"
+Hidden=false
+NoDisplay=false
+Name[en_US]=Multilayer Map Editor
+Name=Multilayer Map Editor
+Comment[en_US]=Edit layered .map files
+Comment=Edit layered .map files

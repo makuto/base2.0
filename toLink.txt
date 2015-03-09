@@ -1,0 +1,8 @@
+Header files: #include "(location of base2.0)/module/module.hpp"
+In order to link:
+g++ -o "%e" "%f" lib/base.a
+
+If Base is installed, just do 
+g++ -o "%e" "%f" -lbase2.0
+Header files: #include <base2.0/module/module.hpp>
+

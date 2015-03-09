@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Exec=gnome-terminal -e "/usr/bin/tileEditor"
+Hidden=false
+NoDisplay=false
+Name[en_US]=Tile Map Editor
+Name=Tile Map Editor
+Comment[en_US]=Edit .map files
+Comment=Edit .map files

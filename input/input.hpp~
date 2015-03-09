@@ -1,0 +1,15 @@
+//#include <SFML/System.hpp>
+//#include <SFML/Window.hpp>
+//This is an evil dependancy. Should probably get rid of it some time
+#include "../graphics/graphics.cpp"
+class inputManager
+{
+    public:
+        inputManager();
+        int getMouseX();
+        int getMouseY();
+        //Sadly, library dependant. Returns whether or not a key is pressed
+        bool isPressed(sf::Keyboard::Key);
+        //Returns whether or not a mouse key is pressed
+        bool isMousePressed(sf::Mouse::Button);
+};

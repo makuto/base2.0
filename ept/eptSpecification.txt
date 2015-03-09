@@ -1,0 +1,29 @@
+----------------
+EPT SPECIFICATION
+----------------
+-Format:
+<fileName.version>
+//Comment (SEE NOTE!)
+groupName:
+	attribute=value;
+
+-WARNING! Attributes are sorted in the map, meaning if you have any
+ order dependency, you must be conscious of the attribute's name!
+ 
+-Value can be anything. Values are terminated by ";", so no quotation
+ marks are necessary or needed for strings. To EPT, ints, strings, etc.
+ are all the same thing as they are stored as mere strings.
+-Multiline attributes are supported; everything will be extracted until the next semicolon
+-Header is space sensitive
+
+-Using : is NOT OK in an attribute definition! This is mainly a result of the
+ precendence I coded for, so it's probably not *that* hard to change if you need to
+
+-NOTE! Comments use "//" and operate on the ENTIRE line! This means that
+ test=This is a test; //Here is an example attribute
+ will IGNORE THE ENTIRE LINE!
+ 
+-It is NOT OK to use "." in a group definition (think about dotted notation). "." is OK
+ in an attribute name or definition.
+ 
+-A group definition ends the instant a line contains a ':' (a new group definition)
