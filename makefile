@@ -1,9 +1,11 @@
 FLAGS=g++ -c -Os -Wall
 ARCHIVE_NAME=lib/base.a
+OBJ_DIR=LOCAL_obj
 
 all: eptParser.o math.o collision.o timer.o profiler.o graphics.o input.o tileMap.o multilayerMap.o tileCamera.o animation.o sound.o
 	@echo -------------------Building archive...
 	ar rvs $(ARCHIVE_NAME) eptParser.o math.o collision.o graphics.o input.o tileMap.o multilayerMap.o tileCamera.o animation.o timer.o profiler.o sound.o
+	#mv *.o $(OBJ_DIR)
 eptParser.o: ept/eptParser.hpp ept/eptParser.cpp
 	$(FLAGS) "ept/eptParser.hpp"
 	$(FLAGS) "ept/eptParser.cpp"

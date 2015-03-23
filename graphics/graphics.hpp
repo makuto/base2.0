@@ -66,6 +66,44 @@ public:
 	//Return a direct pointer to the base sprite (lib dependant)
 	sf::Sprite* getBase();
 };
+//An image with individually changeable pixels
+class pixels
+{
+    friend class window;
+    private:
+        int width;
+        int height;
+        sf::Uint8* rawPixels;
+        sf::Texture texture;
+        sprite spr;
+    public:
+        //Creates the pixel array and sets the pixels to (0, 0, 0, 0);
+        //sets up the primary sprite as well. Note that the primary sprite
+        //smoothing is set to off by default
+        pixels(int newWidth, int newHeight);
+        //Creates the pixel array and sets the pixels to the provided color
+        //sets up the primary sprite as well. Note that the primary sprite
+        //smoothing is set to off by default
+        pixels(int newWidth, int newHeight, unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+
+        //Use this function to manipulate the position etc. of the pixels
+        //through the master sprite
+        sprite* getSprite();
+
+        //Manipulate the color of a single pixel (RGBA); does bounds checking.
+        //Remember to call update() in order to see changes
+        void setPixel(int x, int y, unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+
+        //Call after changing any pixels in order to see changes
+        void update();
+
+        //Sets the provided values to the color of the specified pixel; returns
+        //false if out of bounds
+        bool getPixel(int x, int y, unsigned char& r, unsigned char& g, unsigned char& b, unsigned char& a);
+        //Returns the width and height of the image
+        int getWidth();
+        int getHeight();
+};
 //The core of the graphics, the window.
 class window
 {
@@ -82,6 +120,7 @@ class window
         //Various drawing functions
         void draw(sprite * spr);
         void draw(text *txt);
+        void draw(pixels *pix);
         //Update the window
         void update();
         //Test if the window should close

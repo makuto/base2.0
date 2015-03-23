@@ -28,6 +28,10 @@ void window::draw(text *txt)
 {
     if (txt) win->draw(txt->str);
 }
+void window::draw(pixels *pix)
+{
+    if (pix) win->draw(pix->spr.spr);
+}
 void window::update()
 {
 	time.start();
@@ -191,5 +195,89 @@ void sprite::clearSubRect()
 sf::Sprite* sprite::getBase()
 {
     return &spr;
+}
+
+pixels::pixels(int newWidth, int newHeight)
+{
+    width = newWidth;
+    height = newHeight;
+    rawPixels = new sf::Uint8[width * height * 4];
+    //Blank the pixels
+    for (int i = 0; i < height; ++i)
+    {
+        for (int n = 0; n < width; ++n)
+        {
+            int startIndex = (i * width * 4) + (n * 4);
+            rawPixels[startIndex] = 0;
+            rawPixels[startIndex + 1] = 0;
+            rawPixels[startIndex + 2] = 0;
+            rawPixels[startIndex + 3] = 0;
+        }
+    }
+    texture.create(width, height);
+    texture.update(rawPixels);
+    spr.getBase()->setTexture(texture);
+}
+pixels::pixels(int newWidth, int newHeight, unsigned char r, unsigned char g, unsigned char b, unsigned char a)
+{
+    width = newWidth;
+    height = newHeight;
+    rawPixels = new sf::Uint8[width * height * 4];
+    //Blank the pixels
+    for (int i = 0; i < height; ++i)
+    {
+        for (int n = 0; n < width; ++n)
+        {
+            int startIndex = (i * width * 4) + (n * 4);
+            rawPixels[startIndex] = r;
+            rawPixels[startIndex + 1] = g;
+            rawPixels[startIndex + 2] = b;
+            rawPixels[startIndex + 3] = a;
+        }
+    }
+    texture.create(width, height);
+    texture.update(rawPixels);
+    spr.getBase()->setTexture(texture);
+    spr.setSmooth(false);
+}
+sprite* pixels::getSprite()
+{
+    return &spr;
+}
+void pixels::setPixel(int x, int y, unsigned char r, unsigned char g, unsigned char b, unsigned char a)
+{
+    if (x >= 0 && x < width && y >= 0 && y < height)
+    {
+        int startIndex = (y * width * 4) + (x * 4);
+        rawPixels[startIndex] = r;
+        rawPixels[startIndex + 1] = g;
+        rawPixels[startIndex + 2] = b;
+        rawPixels[startIndex + 3] = a;
+    }
+}
+void pixels::update()
+{
+    texture.update(rawPixels);
+}
+bool pixels::getPixel(int x, int y, unsigned char& r, unsigned char& g, unsigned char& b, unsigned char& a)
+{
+    if (x >= 0 && x < width && y >= 0 && y < height)
+    {
+        int startIndex = (y * width * 4) + (x * 4);
+        r = rawPixels[startIndex];
+        g = rawPixels[startIndex + 1];
+        b = rawPixels[startIndex + 2];
+        a = rawPixels[startIndex + 3];
+        return true;
+    }
+    else return false;
+}
+int pixels::getWidth()
+{
+    return width;
+}
+int pixels::getHeight()
+{
+    return height;
 }
 #endif
