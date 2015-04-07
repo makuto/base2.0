@@ -408,6 +408,16 @@ int attrToArrayLength(const std::string& attr)
     }
     return length;
 }
+
+/*int main()
+{
+    std::string arr = "{2, 50}";
+    std::cout << "Length: " << attrToArrayLength(arr) << "\n";
+    for (int i = 0; i < attrToArrayLength(arr); ++i)
+    {
+        std::cout << attrToArrayInt(arr, i) << "\n";
+    }
+}*/
 std::string floatToAttr(float in)
 {
 	std::ostringstream s;
