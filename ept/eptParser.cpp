@@ -315,6 +315,99 @@ bool attrToBool(const std::string& attr)
 	if (attr=="true") return true;
 	return false;
 }
+
+std::string getArrayValue(const std::string& attr, int index)
+{
+    unsigned int openPos = attr.find("{");
+    unsigned int closePos = attr.find("}");
+    std::string inArray = attr.substr(openPos, closePos - openPos);
+    //getArrayValue won't do bounds checking or see if it's a malformed
+    //array because it needs to be fast. It will trust that getArrayLength was
+    //checked first
+    if (index == 0)
+    {
+        //Trim for first element
+        unsigned int startPos = 0;
+        unsigned int endPos = inArray.length();
+        for (unsigned int i = 0; i < inArray.length(); ++i)
+        {
+            if (inArray[i] != ' ' && startPos==0) startPos = i;
+            if (inArray[i] == '}' || (inArray[i] == ',' && inArray[i-1] != '\\'))
+            {
+                endPos = i;
+                break;
+            }
+        }
+        return inArray.substr(startPos, endPos - startPos);
+    }
+    int counter = 0;
+    for (unsigned int i = 0; i < inArray.length(); ++i)
+    {
+        if (inArray[i] == ',' && inArray[i - 1] != '\\') //Found nondelimited comma
+        {
+            counter++;
+            if (counter == index) //Found the desired element
+            {
+                unsigned int startPos = i + 1;
+                unsigned int endPos = inArray.length();
+                for (unsigned int n = i + 1; n < inArray.length(); n++)
+                {
+                    if (startPos == i + 1 && inArray[n] != ' ') startPos = n;
+                    if (inArray[n]=='}' || (inArray[n] == ',' && inArray[n - 1] != '\\'))
+                    {
+                        endPos = n;
+                        break;
+                    }
+                }
+                return inArray.substr(startPos, endPos - i - 2);
+            }
+        }
+    }
+    
+    //Item doesn't exist (out of bounds, malformed array, etc.)
+    return "";
+}
+float attrToArrayFloat(const std::string& attr, int index)
+{
+    return attrToFloat(getArrayValue(attr, index));
+}
+int attrToArrayInt(const std::string& attr, int index)
+{
+    return attrToInt(getArrayValue(attr, index));
+}
+bool attrToArrayBool(const std::string& attr, int index)
+{
+    return attrToBool(getArrayValue(attr, index));
+}
+std::string attrToArrayStr(const std::string& attr, int index)
+{
+    std::string val = getArrayValue(attr, index);
+    //Parse out comma delimiters
+    for (unsigned int i = 0; i < val.length(); ++i)
+    {
+        if (val[i]=='\\' && val[i + 1]==',') val.erase(i, 1);
+    }
+    return val;
+}
+//Returns 0 if the attribute is not an array
+int attrToArrayLength(const std::string& attr)
+{
+    unsigned int openPos = attr.find("{");
+    unsigned int closePos = attr.find("}");
+    //Not an array if no curly braces or nothing between the curly braces ( {} )
+    if (openPos >= attr.length() || closePos >= attr.length() || closePos - openPos == 1)
+    {
+        //Malformed or not an array; return 0
+        return 0;
+    }
+    //Length is determined by counting the number of commas
+    unsigned int length = 1;
+    for (unsigned int i = openPos + 1; i < closePos; i++)
+    {
+        if (attr[i]==',' && attr[i - 1] != '\\') length++;
+    }
+    return length;
+}
 std::string floatToAttr(float in)
 {
 	std::ostringstream s;

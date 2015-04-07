@@ -63,6 +63,23 @@ class eptParser
 float attrToFloat(const std::string&);
 int attrToInt(const std::string&);
 bool attrToBool(const std::string&);
+//Array utility functions
+//Arrays have the following notation:
+//myArray={1, -2.34, false, This is a string\, charles!};
+//You MUST put a space after the commas! {arr, arr}, NOT {arr,arr}
+//No, arrays cannot be nested. Could they be in the future? yes (TODO)
+//They do not have to be homogenous, but you need to call the right functions
+//for each respective value. If the value is not an array, attrToArrayLength
+//will return a length of 0. All other functions will return default null values
+float attrToArrayFloat(const std::string&, int index);
+int attrToArrayInt(const std::string&, int index);
+bool attrToArrayBool(const std::string&, int index);
+std::string attrToArrayStr(const std::string&, int index);
+//Returns 0 if the attribute is not an array (or the array is empty; note
+//that an empty array MUST be {} - it cannot have spaces etc.
+int attrToArrayLength(const std::string&);
+
+//Convert values into attributes
 std::string floatToAttr(float);
 std::string intToAttr(int);
 #endif

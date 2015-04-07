@@ -13,10 +13,6 @@ groupName:
 -Value can be anything. Values are terminated by ";", so no quotation
  marks are necessary or needed for strings. To EPT, ints, strings, etc.
  are all the same thing as they are stored as mere strings.
-	-Value conversion functions are provided for ints, floats, strings (no need
-	 for quotation marks), bools ('true' or 'false'), and arrays (surrounded by 
- 	 brackets ({ and }); empty array is {}, items are delimited by ', ', and homogenity
-	 isn't required)
 -Multiline attributes are supported; everything will be extracted until the next semicolon
 -Header is space sensitive
 
