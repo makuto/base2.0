@@ -1,4 +1,4 @@
-FLAGS=g++ -c -Os -Wall
+FLAGS=g++ -std=c++11 -c -Os -Wall
 ARCHIVE_NAME=lib/base.a
 OBJ_DIR=LOCAL_obj
 

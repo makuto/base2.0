@@ -1,6 +1,7 @@
 #ifndef INPUT_CPP
 #define INPUT_CPP
 #include "input.hpp"
+#include <iostream>
 inputManager::inputManager(sf::RenderWindow *newWin)
 {
 	win=newWin;
@@ -28,6 +29,20 @@ int inputManager::getMouseX()
 int inputManager::getMouseY()
 {
 	return sf::Mouse::getPosition(*win).y;
+}
+//Universal button function. Call if you want to use both mouse
+//and keyboard together (more abstract)
+bool inputManager::isPressed(int code)
+{
+    //Mouse code (they start at 1000)
+    if (code >= 1000)
+    {
+        inputCode::mouseCode mouseButton = static_cast<inputCode::mouseCode>(code);
+        return isMousePressed(mouseButton);
+    }
+    //Keyboard code (they start at 0)
+    inputCode::keyCode keyButton = static_cast<inputCode::keyCode>(code);
+    return isPressed(keyButton);
 }
 bool inputManager::isPressed(sf::Keyboard::Key key)
 {
@@ -375,5 +390,31 @@ sf::Mouse::Button inputManager::convertMouseCode(inputCode::mouseCode button)
 			break;
 	}
 	return newButton;
+}
+//Universal input function. Call if you want to use mouse and keyboard
+//buttons or even return mouse position
+int inputManager::getState(int code)
+{
+    if (code >= 2000) //Mouse position code
+    {
+        switch(code)
+        {
+            case inputCode::mousePosition::MouseX:
+                return getMouseX();
+                break;
+            case inputCode::mousePosition::MouseY:
+                return getMouseY();
+                break;
+            default:
+                break;
+        }
+    }
+    else //Button code
+    {
+        return isPressed(code);
+    }
+    //Input code not recognized
+    std::cout << "WARNING: inputManager.getState(): Input code " << code << " not recognized! Returning 0\n";
+    return 0; 
 }
 #endif

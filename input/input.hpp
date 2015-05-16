@@ -11,7 +11,7 @@ namespace inputCode
 	//Enums for key codes
 	//Keyboard codes (for input independence)
 	//An *almost* direct copy of SFML 2.0 sf::Key (see /usr/local/include/SFML/Window/Keyboard.hpp)
-	enum keyCode
+	enum keyCode:int
 	{
 		A = 0,        ///< The A key
 		B,            ///< The B key
@@ -115,12 +115,18 @@ namespace inputCode
 		F15          ///< The F15 key
 	};
 	//Mouse codes
-	enum mouseCode
+	enum mouseCode:int
 	{
-		LeftMouse=0,
+		LeftMouse=1000,
 		RightMouse,
 		MiddleMouse
 	};
+    //Mouse position codes
+    enum mousePosition:int
+    {
+        MouseX=2000,
+        MouseY
+    };
 }
 
 class inputManager
@@ -137,6 +143,9 @@ class inputManager
         void setWindow(window *);
         int getMouseX();
         int getMouseY();
+        //Universal button function. Call if you want to use both mouse
+        //and keyboard together (more abstract)
+        bool isPressed(int code);
         //Sadly, library dependant. Returns whether or not a key is pressed
         bool isPressed(inputCode::keyCode);
         //Note that this function is now deprecated; use isPressed(inputCode::keyCode) instead
@@ -150,5 +159,9 @@ class inputManager
 		bool isMousePressed(inputCode::mouseCode);
         //Note that this function is now deprecated; use isMousePressed(inputCode::keyCode) instead
         bool isMousePressed(sf::Mouse::Button);
+
+        //Universal input function. Call if you want to use mouse and keyboard
+        //buttons or even return mouse position
+        int getState(int code);
 };
 #endif
