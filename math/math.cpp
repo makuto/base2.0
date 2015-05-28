@@ -13,10 +13,10 @@ float distanceTo(float aX, float aY, float bX, float bY)
 }
 float manhattanTo(float aX, float aY, float bX, float bY)
 {
-    //ax-bx sq + ay-by sq
+    //ax-bx abs + ay-by abs
     float x=aX-bX;
     float y=aY-bY;
-    return x*x + y*y;
+    return fabs(x) + fabs(y);
 }
 float pointTowards(float aX, float aY, float bX, float bY)
 {
