@@ -2,10 +2,13 @@ FLAGS=g++ -std=c++11 -c -Os -Wall
 ARCHIVE_NAME=lib/base.a
 OBJ_DIR=LOCAL_obj
 
-all: eptParser.o math.o collision.o timer.o profiler.o graphics.o input.o tileMap.o multilayerMap.o tileCamera.o animation.o sound.o
+all: noise.o eptParser.o math.o collision.o timer.o profiler.o graphics.o input.o tileMap.o multilayerMap.o tileCamera.o animation.o sound.o
 	@echo -------------------Building archive...
-	ar rvs $(ARCHIVE_NAME) eptParser.o math.o collision.o graphics.o input.o tileMap.o multilayerMap.o tileCamera.o animation.o timer.o profiler.o sound.o
+	ar rvs $(ARCHIVE_NAME) noise.o eptParser.o math.o collision.o graphics.o input.o tileMap.o multilayerMap.o tileCamera.o animation.o timer.o profiler.o sound.o
 	#mv *.o $(OBJ_DIR)
+noise.o: noise/noise.hpp noise/noise.cpp
+	$(FLAGS) "noise/noise.hpp"
+	$(FLAGS) "noise/noise.cpp"
 eptParser.o: ept/eptParser.hpp ept/eptParser.cpp
 	$(FLAGS) "ept/eptParser.hpp"
 	$(FLAGS) "ept/eptParser.cpp"
@@ -72,6 +75,8 @@ clean:
 	rm sound/*.gch
 	rm ept/*.gch
 	rm animation/*.gch
+	rm noise/*.gch
+	#rm 3rdParty/*.gch
 	@echo -------------------If base is installed, removing it... [root priveleges]
 	rm /usr/lib/libbase2.0.a
 	rm -r /usr/include/base2.0
@@ -90,6 +95,8 @@ install:
 	cp lib/base.a /usr/lib/libbase2.0.a
 	@echo -------------------Preparing /usr/include/base2.0...
 	mkdir /usr/include/base2.0
+	mkdir /usr/include/base2.0/3rdParty
+	mkdir /usr/include/base2.0/noise
 	mkdir /usr/include/base2.0/ept 
 	mkdir /usr/include/base2.0/math
 	mkdir /usr/include/base2.0/collision
@@ -101,6 +108,8 @@ install:
 	mkdir /usr/include/base2.0/sound
 	mkdir /usr/include/base2.0/animation
 	@echo -------------------Installing header files to /usr/include/base2.0...
+	cp 3rdParty/OpenSimplexNoise.hh /usr/include/base2.0/3rdParty/OpenSimplexNoise.hh
+	cp noise/noise.hpp /usr/include/base2.0/noise/noise.hpp
 	cp math/math.hpp /usr/include/base2.0/math/math.hpp
 	cp ept/eptParser.hpp /usr/include/base2.0/ept/eptParser.hpp
 	cp collision/collision.hpp /usr/include/base2.0/collision/collision.hpp
@@ -117,6 +126,8 @@ update:
 	@echo -------------------Installing /lib/base.a to /usr/lib/libbase2.0.a...
 	cp lib/base.a /usr/lib/libbase2.0.a
 	@echo -------------------Installing header files to /usr/include/base2.0...
+	cp 3rdParty/OpenSimplexNoise.hh /usr/include/base2.0/3rdParty/OpenSimplexNoise.hh
+	cp noise/noise.hpp /usr/include/base2.0/noise/noise.hpp
 	cp math/math.hpp /usr/include/base2.0/math/math.hpp
 	cp ept/eptParser.hpp /usr/include/base2.0/ept/eptParser.hpp
 	cp collision/collision.hpp /usr/include/base2.0/collision/collision.hpp
