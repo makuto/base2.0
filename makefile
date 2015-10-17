@@ -2,10 +2,17 @@ FLAGS=g++ -std=c++11 -c -Os -Wall
 ARCHIVE_NAME=lib/base.a
 OBJ_DIR=LOCAL_obj
 
-all: noise.o eptParser.o math.o collision.o timer.o profiler.o graphics.o input.o tileMap.o multilayerMap.o tileCamera.o animation.o sound.o
+all: pool.o quadTree.o noise.o eptParser.o math.o collision.o timer.o profiler.o graphics.o imageManager.o input.o inputState.o tileMap.o multilayerMap.o tileCamera.o animation.o sound.o
 	@echo -------------------Building archive...
-	ar rvs $(ARCHIVE_NAME) noise.o eptParser.o math.o collision.o graphics.o input.o tileMap.o multilayerMap.o tileCamera.o animation.o timer.o profiler.o sound.o
+	ar rvs $(ARCHIVE_NAME) pool.o quadTree.o noise.o eptParser.o math.o collision.o graphics.o imageManager.o input.o inputState.o tileMap.o multilayerMap.o tileCamera.o animation.o timer.o profiler.o sound.o
 	#mv *.o $(OBJ_DIR)
+
+pool.o: dataStructures/pool.hpp dataStructures/pool.cpp
+	$(FLAGS) "dataStructures/pool.hpp"
+	$(FLAGS) "dataStructures/pool.cpp"
+quadTree.o: dataStructures/quadTree.hpp dataStructures/quadTree.cpp
+	$(FLAGS) "dataStructures/quadTree.hpp"
+	$(FLAGS) "dataStructures/quadTree.cpp"
 noise.o: noise/noise.hpp noise/noise.cpp
 	$(FLAGS) "noise/noise.hpp"
 	$(FLAGS) "noise/noise.cpp"
@@ -27,9 +34,15 @@ profiler.o: profiler/profiler.hpp profiler/profiler.cpp
 graphics.o: graphics/graphics.hpp graphics/graphics.cpp
 	$(FLAGS) "graphics/graphics.hpp"
 	$(FLAGS) "graphics/graphics.cpp"
+imageManager.o: graphics/imageManager.hpp graphics/imageManager.cpp
+	$(FLAGS) "graphics/imageManager.hpp"
+	$(FLAGS) "graphics/imageManager.cpp"
 input.o: input/input.hpp input/input.cpp
 	$(FLAGS) "input/input.hpp"
 	$(FLAGS) "input/input.cpp"
+inputState.o: input/inputState.hpp input/inputState.cpp
+	$(FLAGS) "input/inputState.hpp"
+	$(FLAGS) "input/inputState.cpp"
 tileMap.o: tileMap/tileMap.hpp tileMap/tileMap.cpp
 	$(FLAGS) "tileMap/tileMap.hpp"
 	$(FLAGS) "tileMap/tileMap.cpp"
@@ -76,6 +89,7 @@ clean:
 	rm ept/*.gch
 	rm animation/*.gch
 	rm noise/*.gch
+	rm dataStructures/*.gch
 	#rm 3rdParty/*.gch
 	@echo -------------------If base is installed, removing it... [root priveleges]
 	rm /usr/lib/libbase2.0.a
@@ -97,6 +111,7 @@ install:
 	mkdir /usr/include/base2.0
 	mkdir /usr/include/base2.0/3rdParty
 	mkdir /usr/include/base2.0/noise
+	mkdir /usr/include/base2.0/dataStructures
 	mkdir /usr/include/base2.0/ept 
 	mkdir /usr/include/base2.0/math
 	mkdir /usr/include/base2.0/collision
@@ -109,6 +124,8 @@ install:
 	mkdir /usr/include/base2.0/animation
 	@echo -------------------Installing header files to /usr/include/base2.0...
 	cp 3rdParty/OpenSimplexNoise.hh /usr/include/base2.0/3rdParty/OpenSimplexNoise.hh
+	cp dataStructures/pool.hpp /usr/include/base2.0/dataStructures/pool.hpp
+	cp dataStructures/quadTree.hpp /usr/include/base2.0/dataStructures/quadTree.hpp
 	cp noise/noise.hpp /usr/include/base2.0/noise/noise.hpp
 	cp math/math.hpp /usr/include/base2.0/math/math.hpp
 	cp ept/eptParser.hpp /usr/include/base2.0/ept/eptParser.hpp
@@ -116,7 +133,9 @@ install:
 	cp timer/timer.hpp /usr/include/base2.0/timer/timer.hpp
 	cp profiler/profiler.hpp /usr/include/base2.0/profiler/profiler.hpp
 	cp graphics/graphics.hpp /usr/include/base2.0/graphics/graphics.hpp
+	cp graphics/imageManager.hpp /usr/include/base2.0/graphics/imageManager.hpp
 	cp input/input.hpp /usr/include/base2.0/input/input.hpp
+	cp input/inputState.hpp /usr/include/base2.0/input/inputState.hpp
 	cp tileMap/tileMap.hpp /usr/include/base2.0/tileMap/tileMap.hpp
 	cp tileMap/multilayerMap.hpp /usr/include/base2.0/tileMap/multilayerMap.hpp
 	cp tileMap/tileCamera.hpp /usr/include/base2.0/tileMap/tileCamera.hpp
@@ -127,6 +146,8 @@ update:
 	cp lib/base.a /usr/lib/libbase2.0.a
 	@echo -------------------Installing header files to /usr/include/base2.0...
 	cp 3rdParty/OpenSimplexNoise.hh /usr/include/base2.0/3rdParty/OpenSimplexNoise.hh
+	cp dataStructures/pool.hpp /usr/include/base2.0/dataStructures/pool.hpp
+	cp dataStructures/quadTree.hpp /usr/include/base2.0/dataStructures/quadTree.hpp
 	cp noise/noise.hpp /usr/include/base2.0/noise/noise.hpp
 	cp math/math.hpp /usr/include/base2.0/math/math.hpp
 	cp ept/eptParser.hpp /usr/include/base2.0/ept/eptParser.hpp
@@ -134,7 +155,9 @@ update:
 	cp timer/timer.hpp /usr/include/base2.0/timer/timer.hpp
 	cp profiler/profiler.hpp /usr/include/base2.0/profiler/profiler.hpp
 	cp graphics/graphics.hpp /usr/include/base2.0/graphics/graphics.hpp
+	cp graphics/imageManager.hpp /usr/include/base2.0/graphics/imageManager.hpp
 	cp input/input.hpp /usr/include/base2.0/input/input.hpp
+	cp input/inputState.hpp /usr/include/base2.0/input/inputState.hpp
 	cp tileMap/tileMap.hpp /usr/include/base2.0/tileMap/tileMap.hpp
 	cp tileMap/multilayerMap.hpp /usr/include/base2.0/tileMap/multilayerMap.hpp
 	cp tileMap/tileCamera.hpp /usr/include/base2.0/tileMap/tileCamera.hpp
