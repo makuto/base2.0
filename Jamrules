@@ -1,0 +1,90 @@
+# Building Tests:
+# jam clean
+# jam -j4 -q
+
+# Building Unreal:
+# jam clean
+# jam -j4 -q -sUNREAL=true GalavantPseudotarget
+
+# (if building the same target repeatedly, don't clean, if that wasn't obvious)
+
+##
+## Compiler
+##
+
+CC = gcc ;
+
+# GCC
+#C++ = g++ ;
+#LINK = g++ ;
+
+# Clang
+C++ = clang++ ;
+LINK = clang++ ;
+
+##
+## Compiler arguments
+##
+
+# Galavant requires C++11
+
+## Argument explanation
+#
+#   g = debug symbols
+#   -O0 = compile without optimizations for debugging
+#
+#   -Wall -Wextra = Error detection/tolerance
+#   -Wno-unused-parameter = I should probably get rid of this at some point
+#
+#   fPIC = position independent code. This is so the lib can be linked in other libs/executables
+#   -stdlib=lib++ = Unreal uses libc++, which is busted on Ubuntu 16.04. Remove this option
+#      if you don't give a shit about Unreal and/or want to build the tests
+#
+#   lstdc++ = standard library [Unused]
+
+# Arguments used on all projects, regardless of any variables
+C++FLAGS = -std=c++11 -Wall -Wextra -Wno-unused-parameter ;
+
+# Required arguments for tests
+TESTSC++FLAGS = -g ;
+ALLLIBSC++FLAGS = $(TESTSC++FLAGS) ;
+
+OPTIM = -O0 ;
+
+# HDRS = thirdParty/flatbuffers/include src ;
+
+# TODO: add project-specific filetype rules for things like flatbuffer .json compilation (see "UserObject rule":
+# 	https://swarm.workshop.perforce.com/view/guest/perforce_software/jam/src/Jamfile.html ) ?
+
+# TODO: [Hacked done] Calling jam -dc indicates that it thinks many unmodified files are newer, 
+#  which is why it's building way more than it should be. Further investigation is needed, as if it 
+#  has nothing to build it should complete almost instantly
+#  
+#  The problem was Library deletes .o files, preventing Jam from knowing what needs rebuilt
+#   (see https://swarm.workshop.perforce.com/view/guest/perforce_software/jam/src/Jambase.html)
+#  Actually, because I'm moving libs to lib/, Jam doesn't know to look there for .o
+#   (see http://maillist.perforce.com/pipermail/jamming/2004-November/004235.html)
+#  Motherfucker seems to be broken no matter fucking what (see src/Jamfile commented lines)
+#
+#  Update: Something seems fucked with the Library or LibraryFromObjects rules. Instead of diving
+#   deeper, I'm going to just add this flag which will guarantee Jam won't rely on reading the libs
+#   to find "missing" objects
+#  (as an aside, https://swarm.workshop.perforce.com/view/guest/perforce_software/jam/src/Jam.html
+#   was helpful, esp 'jam -dx')
+KEEPOBJS = true ; # This doesn't actually fix anything, though it seems like it should
+NOARSCAN = true ; # This actually fixes the problem
+#AR = ar rUu ; # I was thinking maybe the AR command was wrong (always outputting deterministically)
+               # It doesn't seem like this is the problem though
+AR = ar cr ;
+
+# Some helpful Jam commands
+# -q        : stop on failed target
+# -jN       : use N cores
+# -sVAR=VAL : Set VAR to VAL. Note that setting UNREAL=false is the same as setting UNREAL=true,
+#              frustratingly
+# -dx       : print commands being used
+# -n        : don't actually run commands
+
+# Note: When creating ConsoleOnly frontend, I had to reverse the lib link order. This is probably 
+#  just because I didn't understand link order when making GalavantPseudotarget. I've since updated 
+#  GalavantPseudotarget with the proper order

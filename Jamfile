@@ -1,0 +1,55 @@
+#SubDir . ; # Use when building standalone (i.e. not as a submodule)
+SubDir . libs base2.0 ;
+
+SubDirC++Flags $(ALLLIBSC++FLAGS) ;
+
+Main Base20Pseudotarget : pseudotarget.cpp ;
+
+LinkLibraries Base20Pseudotarget : libBase20 ;
+
+Library libBase20 : dataStructures/pool.cpp
+					dataStructures/pool.cpp
+					dataStructures/quadTree.cpp
+					dataStructures/quadTree.cpp
+					noise/noise.cpp
+					noise/noise.cpp
+					ept/eptParser.cpp
+					ept/eptParser.cpp
+					math/math.cpp
+					math/math.cpp
+					collision/collision.cpp
+					collision/collision.cpp
+					timer/timer.cpp
+					timer/timer.cpp
+					profiler/profiler.cpp
+					profiler/profiler.cpp
+					graphics/graphics.cpp
+					graphics/graphics.cpp
+					graphics/imageManager.cpp
+					graphics/imageManager.cpp
+					input/input.cpp
+					input/input.cpp
+					input/inputState.cpp
+					input/inputState.cpp
+					tileMap/tileMap.cpp
+					tileMap/tileMap.cpp
+					tileMap/multilayerMap.cpp
+					tileMap/multilayerMap.cpp
+					tileMap/tileCamera.cpp
+					tileMap/tileCamera.cpp
+					animation/animation.cpp
+					animation/animation.cpp
+					sound/sound.cpp
+					sound/sound.cpp
+					tileMap/tileEditor.cpp
+					tileMap/tileEditor.cpp
+					tileMap/multilayerMapEditor.cpp ;
+					
+#Library libTiledImporter : tiledImporter/tiledImporter.cpp
+#						   tiledImporter/tiledImporter.cpp
+#						   tiledImporter/pugixml/pugixml.cpp
+#						   tiledImporter/pugixml/pugixml.cpp ;
+
+MakeLocate libBase20 : lib ;
+
+MakeLocate Base20Pseudotarget : bin ;
