@@ -21,6 +21,7 @@ friend class window;
 private:
 	sf::Text str;
 	sf::Font font;
+    sf::Color color;
 public:
 	void setText(std::string);
 	bool loadFont(const char*);
@@ -29,6 +30,7 @@ public:
 	float getY();
 	void setSize(unsigned int);
 	void setColor(char r, char g, char b, char a);
+    void setAlpha(char a);
 	//Returns the actual element used for rendering
 	sf::Text* getBase();
 };

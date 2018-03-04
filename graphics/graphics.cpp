@@ -133,7 +133,12 @@ void text::setSize(unsigned int size)
 }
 void text::setColor(char r, char g, char b, char a)
 {
-    str.setColor(sf::Color(r,g,b,a));
+    color = sf::Color(r,g,b,a);
+    str.setColor(color);
+}
+void text::setAlpha(char a)
+{
+    color.a = a;
 }
 sf::Text* text::getBase()
 {
