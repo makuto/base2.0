@@ -139,6 +139,7 @@ void text::setColor(char r, char g, char b, char a)
 void text::setAlpha(char a)
 {
     color.a = a;
+    str.setColor(color);
 }
 sf::Text* text::getBase()
 {
