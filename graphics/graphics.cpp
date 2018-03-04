@@ -8,12 +8,26 @@
 window::window(int width,int height, std::string title)
 {
     isClearing=true;
-    win=new sf::RenderWindow(sf::VideoMode(width, height), title, sf::Style::Close);
-    //win->setVerticalSyncEnabled(false);
+	win = new sf::RenderWindow(sf::VideoMode(width, height), title,
+	                           sf::Style::Close | sf::Style::Resize);
+	//win->setVerticalSyncEnabled(false);
     //win->setFramerateLimit(45);
     focused=true;
 	time.start();
 }
+
+window::window(int width, int height, std::string title, WindowResizeCB onResizeCallback)
+    : onResize(onResizeCallback)
+{
+    isClearing=true;
+    win = new sf::RenderWindow(sf::VideoMode(width, height), title,
+                               sf::Style::Close | sf::Style::Resize);
+    //win->setVerticalSyncEnabled(false);
+    //win->setFramerateLimit(45);
+    focused=true;
+    time.start();
+}
+
 //Close & delete the window
 window::~window()
 {
@@ -54,8 +68,11 @@ bool window::shouldClose()
         if (event.type==sf::Event::Closed) return true;
         if (event.type==sf::Event::Resized)
         {
-			//std::cout << "Window resized to " << event.size.width << " , " << event.size.height << "\n";
-			//win->setSize(sf::Vector2u(event.size.width, event.size.height));
+			win->setView(
+			    sf::View(sf::Vector2<float>(event.size.width / 2.f, event.size.height / 2.f),
+			             sf::Vector2<float>(event.size.width, event.size.height)));
+            if (onResize)
+                onResize(event.size.width, event.size.height);
 		}
 		if (event.type==sf::Event::GainedFocus)
 		{

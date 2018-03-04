@@ -106,6 +106,9 @@ class pixels
         int getWidth();
         int getHeight();
 };
+
+typedef void (*WindowResizeCB)(float, float);
+
 //The core of the graphics, the window.
 class window
 {
@@ -115,8 +118,11 @@ class window
         bool isClearing;
         bool focused;
 		timer time;
+
+        WindowResizeCB onResize;
     public:
         window(int width,int height, std::string title);
+        window(int width, int height, std::string title, WindowResizeCB onResizeCallback);
         //Close & delete the window
         ~window();
         //Various drawing functions
