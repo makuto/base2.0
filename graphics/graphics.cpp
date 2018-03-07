@@ -132,6 +132,10 @@ void text::setText(std::string newText)
 {
     str.setString(newText);
 }
+void text::setText(std::wstring newText)
+{
+    str.setString(newText);
+}
 void text::setPosition(float newX, float newY)
 {
     str.setPosition(newX, newY);

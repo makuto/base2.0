@@ -23,7 +23,8 @@ private:
 	sf::Font font;
     sf::Color color;
 public:
-	void setText(std::string);
+    void setText(std::string);
+	void setText(std::wstring);
 	bool loadFont(const char*);
 	void setPosition(float newX, float newY);
 	float getX();
