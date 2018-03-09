@@ -4,36 +4,40 @@
 #include <iostream>
 inputManager::inputManager(sf::RenderWindow *newWin)
 {
-	win=newWin;
+	sfWin=newWin;
 }
 inputManager::inputManager(window *newWin)
 {
-	win=newWin->getBase();
+	sfWin=newWin->getBase();
+	win = newWin;
 }
 inputManager::inputManager()
 {
-	win=NULL;
+	sfWin=NULL;
 }
 void inputManager::setWindow(sf::RenderWindow *newWin)
 {
-	win=newWin;
+	sfWin=newWin;
 }
 void inputManager::setWindow(window *newWin)
 {
-	win=newWin->getBase();
+	sfWin=newWin->getBase();
+	win = newWin;
 }
 int inputManager::getMouseX()
 {
-	return sf::Mouse::getPosition(*win).x;
+	return sf::Mouse::getPosition(*sfWin).x;
 }
 int inputManager::getMouseY()
 {
-	return sf::Mouse::getPosition(*win).y;
+	return sf::Mouse::getPosition(*sfWin).y;
 }
 //Universal button function. Call if you want to use both mouse
 //and keyboard together (more abstract)
 bool inputManager::isPressed(int code)
 {
+	if (win && !win->isFocused())
+		return false;
     //Mouse code (they start at 1000)
     if (code >= 1000)
     {
@@ -43,13 +47,15 @@ bool inputManager::isPressed(int code)
     //Keyboard code (they start at 0)
     inputCode::keyCode keyButton = static_cast<inputCode::keyCode>(code);
     return isPressed(keyButton);
-}
+}   
 bool inputManager::isPressed(sf::Keyboard::Key key)
 {
 	return sf::Keyboard::isKeyPressed(key);
 }
 bool inputManager::isPressed(inputCode::keyCode key)
 {
+	if (win && !win->isFocused())
+		return false;
 	return sf::Keyboard::isKeyPressed(convertKeyCode(key));
 }
 bool inputManager::isMousePressed(sf::Mouse::Button button)
@@ -58,6 +64,8 @@ bool inputManager::isMousePressed(sf::Mouse::Button button)
 }
 bool inputManager::isMousePressed(inputCode::mouseCode button)
 {
+	if (win && !win->isFocused())
+		return false;
 	return sf::Mouse::isButtonPressed(convertMouseCode(button));
 }
 sf::Keyboard::Key inputManager::convertKeyCode(inputCode::keyCode key)

@@ -132,7 +132,8 @@ namespace inputCode
 class inputManager
 {
 	private:
-		sf::RenderWindow *win;
+		sf::RenderWindow *sfWin;
+		window* win;
 		//sf::Keyboard convertKeyCode(keyCode);
     public:
 		//Use inputManager(window*) over lib-specific functions
