@@ -3,7 +3,7 @@ SubDir . libs base2.0 ;
 
 SubDirC++Flags $(ALLLIBSC++FLAGS) ;
 
-Main Base20Pseudotarget : pseudotarget.cpp ;
+# Main Base20Pseudotarget : pseudotarget.cpp ; # Use when building standalone
 
 LinkLibraries Base20Pseudotarget : libBase20 ;
 
