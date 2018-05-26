@@ -1,5 +1,6 @@
 #SubDir . ; # Use when building standalone (i.e. not as a submodule)
-SubDir . libs base2.0 ;
+#SubDir . libs base2.0 ; #The old way for 7drl2018
+SubDir . ThirdParty base2.0 ;
 
 SubDirC++Flags $(ALLLIBSC++FLAGS) ;
 
