@@ -45,4 +45,4 @@ Base/Base2.0 are my game libraries and SFML abstraction layers. I've built it wi
 
 Questions? Email me: macoymadson@gmail.com
 
-Check out my website: http://augames.f11.us/
+[Check out my website.](http://au79games.wordpress.com/)
