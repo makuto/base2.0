@@ -1,10 +1,11 @@
 #SubDir . ; # Use when building standalone (i.e. not as a submodule)
 #SubDir . libs base2.0 ; #The old way for 7drl2018
-SubDir . ThirdParty base2.0 ;
+# SubDir . ThirdParty base2.0 ;
+SubDir . ;
 
 SubDirC++Flags $(ALLLIBSC++FLAGS) ;
 
-# Main Base20Pseudotarget : pseudotarget.cpp ; # Use when building standalone
+Main Base20Pseudotarget : pseudotarget.cpp ; # Use when building standalone
 
 LinkLibraries Base20Pseudotarget : libBase20 ;
 
