@@ -21,6 +21,7 @@ CC = gcc ;
 # Clang
 C++ = clang++ ;
 LINK = clang++ ;
+# LINK = ld ;
 
 ##
 ## Compiler arguments
@@ -43,13 +44,35 @@ LINK = clang++ ;
 #   lstdc++ = standard library [Unused]
 
 # Arguments used on all projects, regardless of any variables
-C++FLAGS = -std=c++11 -Wall -Wextra -Wno-unused-parameter ;
+C++FLAGS = -std=c++11 -Wall -Wextra -Wno-unused-parameter -D IMGUI_INCLUDE_IMCONFIG_H ;
 
 # Required arguments for tests
 TESTSC++FLAGS = -g ;
 ALLLIBSC++FLAGS = $(TESTSC++FLAGS) ;
 
 OPTIM = -O0 ;
+
+HDRS =
+../../3rdParty/repositories/SFML/include
+../../3rdParty/repositories/imgui
+../../3rdParty/repositories/imgui-sfml
+;
+
+LINKFLAGS = --verbose
+-Wl,-rpath,.:../../3rdParty/repositories/SFML/lib
+;
+
+# This is for test executables, not the lib. You can use this as reference for your own executables
+LINKLIBS =
+# SFML
+-L../../3rdParty/repositories/SFML/lib
+-lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
+
+# OpenGL
+-lGL
+-lGLU
+-lGLEW
+;
 
 # HDRS = thirdParty/flatbuffers/include src ;
 

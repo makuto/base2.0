@@ -55,3 +55,16 @@ Library libBase20 : dataStructures/pool.cpp
 MakeLocate libBase20 : lib ;
 
 MakeLocate Base20Pseudotarget : bin ;
+
+#
+# Tests
+#
+Main TestBase20 : tests/main.cpp
+../../3rdParty/repositories/imgui/imgui.cpp
+../../3rdParty/repositories/imgui/imgui_demo.cpp
+../../3rdParty/repositories/imgui/imgui_widgets.cpp
+../../3rdParty/repositories/imgui/imgui_draw.cpp
+../../3rdParty/repositories/imgui-sfml/imgui-SFML.cpp
+;
+
+LinkLibraries TestBase20 : libBase20 ;
