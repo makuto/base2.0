@@ -44,6 +44,7 @@ int main()
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Clock.hpp>
 #include <SFML/Window/Event.hpp>
+#include <SFML/Graphics.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
 
 int main2()
@@ -52,7 +53,17 @@ int main2()
     window.setFramerateLimit(60);
     ImGui::SFML::Init(window);
 
-    sf::CircleShape shape(100.f);
+	sf::Font font;
+	sf::Text str;
+	if (!font.loadFromFile("/home/macoy/Development/code/repositories/spargus-vehicle-prototype/"
+	                       "data/fonts/UbuntuMono-R.ttf"))
+		return false;
+	else
+	{
+		str.setFont(font);
+	}
+
+	sf::CircleShape shape(100.f);
     shape.setFillColor(sf::Color::Green);
 
     sf::Clock deltaClock;
