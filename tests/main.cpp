@@ -81,4 +81,6 @@ int main2()
     }
 
     ImGui::SFML::Shutdown();
+
+	return 0;
 }

@@ -66,11 +66,20 @@ LINKFLAGS =
 -Wl,-rpath,.:dependencies/SFML/lib
 ;
 
+if $(DEBUG_BUILD)
+{
+  SFML_LINKLIBS = -lsfml-audio-d -lsfml-graphics-d -lsfml-window-d -lsfml-system-d ;
+}
+else
+{
+  SFML_LINKLIBS = -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system ;
+}
+
 # This is for test executables, not the lib. You can use this as reference for your own executables
 LINKLIBS =
 # SFML
 -Ldependencies/SFML/lib
--lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
+$(SFML_LINKLIBS)
 
 # OpenGL
 -lGL
