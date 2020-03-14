@@ -44,7 +44,8 @@ LINK = clang++ ;
 #   lstdc++ = standard library [Unused]
 
 # Arguments used on all projects, regardless of any variables
-C++FLAGS = -std=c++11 -Wall -Wextra -Wno-unused-parameter -fPIC
+C++FLAGS = -std=c++14 -stdlib=libstdc++ -fPIC
+-Wall -Wextra -Wno-unused-parameter
 # Why isn't this quoting properly?
 # -D IMGUI_USER_CONFIG=\"dependencies/imgui-sfml/imconfig-SFML.h\"
 ;
@@ -61,7 +62,7 @@ dependencies/imgui
 dependencies/imgui-sfml
 ;
 
-LINKFLAGS =
+LINKFLAGS = -stdlib=libstdc++
 -Wl,-rpath,.:dependencies/SFML/lib
 ;
 
