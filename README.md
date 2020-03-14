@@ -45,4 +45,9 @@ Base/Base2.0 are my game libraries and SFML abstraction layers. I've built it wi
 
 Questions? Email me: macoymadson@gmail.com
 
-[Check out my website.](http://au79games.wordpress.com/)
+[Check out my website.](http://macoy.me/)
+
+Compiling SFML from Source
+-------
+For Ubuntu:
+	sudo apt install libopenal-dev libvorbis-dev libflac-dev libglew

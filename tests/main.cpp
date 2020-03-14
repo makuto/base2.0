@@ -55,8 +55,7 @@ int main2()
 
 	sf::Font font;
 	sf::Text str;
-	if (!font.loadFromFile("/home/macoy/Development/code/repositories/spargus-vehicle-prototype/"
-	                       "data/fonts/UbuntuMono-R.ttf"))
+	if (!font.loadFromFile("../../data/fonts/UbuntuMono-R.ttf"))
 		return false;
 	else
 	{
