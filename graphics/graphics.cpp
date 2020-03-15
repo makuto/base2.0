@@ -1,5 +1,3 @@
-#ifndef GRAPHICS_CPP
-#define GRAPHICS_CPP
 #include "graphics.hpp"
 #include <iostream>
 ///////////////////////////////////////////////
@@ -70,6 +68,40 @@ float window::getFrameTime()
 	// return win->GetFrameTime(); //Looks like it's deprecated; let's just use a timer then
 	return time.getTime();
 }
+
+// Returns whether the Closed event was received
+bool window::pollEventsUpdateState(
+    std::function<void(sf::RenderWindow*, const sf::Event&)> eventCallback)
+{
+	sf::Event event;
+	bool shouldClose = false;
+	while (win->pollEvent(event))
+	{
+		if (event.type == sf::Event::Closed)
+			shouldClose = true;
+		else if (event.type == sf::Event::Resized)
+		{
+			win->setView(
+			    sf::View(sf::Vector2<float>(event.size.width / 2.f, event.size.height / 2.f),
+			             sf::Vector2<float>(event.size.width, event.size.height)));
+			if (onResize)
+				onResize(event.size.width, event.size.height);
+		}
+		else if (event.type == sf::Event::GainedFocus)
+		{
+			focused = true;
+		}
+		else if (event.type == sf::Event::LostFocus)
+		{
+			focused = false;
+		}
+
+		eventCallback(win, event);
+	}
+
+	return shouldClose;
+}
+
 // This is a sloppy function because it does a lot more then tell whether or
 // not the window should close, but it works well in this condition
 bool window::shouldClose()
@@ -98,11 +130,12 @@ bool window::shouldClose()
 	}
 	return false;
 }
+
 bool window::isFocused()
 {
 	return focused;
 }
-void window::setBackgroundColor(char r, char g, char b, char a)
+void window::setBackgroundColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
 {
 	background.r = r;
 	background.g = g;
@@ -142,44 +175,62 @@ bool text::loadFont(const char* fileName)
 		return true;
 	}
 }
+
 void text::setText(std::string newText)
 {
 	str.setString(newText);
 }
+
 void text::setText(std::wstring newText)
 {
 	str.setString(newText);
 }
+
 void text::setPosition(float newX, float newY)
 {
 	str.setPosition(newX, newY);
 }
+
 float text::getX()
 {
 	return str.getPosition().x;
 }
+
 float text::getY()
 {
 	return str.getPosition().y;
 }
+
 void text::setSize(unsigned int size)
 {
 	str.setCharacterSize(size);
 }
-void text::setColor(char r, char g, char b, char a)
+
+void text::setColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
 {
 	color = sf::Color(r, g, b, a);
-	str.setColor(color);
+	str.setFillColor(color);
 }
+
+void text::setOutlineColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
+{
+	outlineColor = sf::Color(r, g, b, a);
+	str.setOutlineColor(outlineColor);
+}
+
 void text::setAlpha(char a)
 {
 	color.a = a;
-	str.setColor(color);
+	outlineColor.a = a;
+	str.setFillColor(color);
+	str.setOutlineColor(outlineColor);
 }
+
 sf::Text* text::getBase()
 {
 	return &str;
 }
+
 ///////////////////////////////////////////////
 // Sprite  /////////////////////////////////////
 ///////////////////////////////////////////////
@@ -326,4 +377,3 @@ int pixels::getHeight()
 {
 	return height;
 }
-#endif

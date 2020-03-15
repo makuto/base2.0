@@ -3,11 +3,12 @@
  * language bindings, if they are eventually added. Note that for now I won't be adding primitives
  * like rectangles or lines. They will be added if needed.
  * */
-#ifndef GRAPHICS_HPP
-#define GRAPHICS_HPP
+#pragma once
+
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
+#include <functional>
 #include <string>
 #include "../timer/timer.hpp"  //Useful for getframetime
                                // To link:
@@ -23,16 +24,22 @@ private:
 	sf::Text str;
 	sf::Font font;
 	sf::Color color;
+	sf::Color outlineColor;
 
 public:
 	void setText(std::string);
 	void setText(std::wstring);
+	
 	bool loadFont(const char*);
+	
 	void setPosition(float newX, float newY);
 	float getX();
 	float getY();
 	void setSize(unsigned int);
-	void setColor(char r, char g, char b, char a);
+
+	void setColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+	void setOutlineColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+
 	void setAlpha(char a);
 	// Returns the actual element used for rendering
 	sf::Text* getBase();
@@ -143,14 +150,18 @@ public:
 	void draw(pixels* pix);
 	// Update the window
 	void update();
-	// Test if the window should close
+	// Update events, including focused, and call callback for each event
+	// Returns whether the Closed event was received
+	bool pollEventsUpdateState(
+	    std::function<void(sf::RenderWindow*, const sf::Event&)> eventCallback);
+	// Test if the window should close, and update events like focused
 	bool shouldClose();
 	// If the window is focused (true) or buried (false)
 	bool isFocused();
 	// Time since last frame
 	float getFrameTime();
 	// Window configuration & management
-	void setBackgroundColor(char, char, char, char);
+	void setBackgroundColor(unsigned char, unsigned char, unsigned char, unsigned char);
 	// If you don't want to clear the window after updating (at all)
 	void shouldClear(bool newState);
 	// Get the dimensions of the window
@@ -159,4 +170,3 @@ public:
 	// Return a direct pointer to the base (library dependant)
 	sf::RenderWindow* getBase();
 };
-#endif
