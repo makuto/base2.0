@@ -5,47 +5,34 @@ SubDir . ;
 
 SubDirC++Flags $(ALLLIBSC++FLAGS) ;
 
+# TODO: Replace with a depends rule instead
 Main Base20Pseudotarget : pseudotarget.cpp ; # Use when building standalone
 
 LinkLibraries Base20Pseudotarget : libBase20 ;
 
-Library libBase20 : dataStructures/pool.cpp
-					dataStructures/pool.cpp
-					dataStructures/quadTree.cpp
-					dataStructures/quadTree.cpp
-					noise/noise.cpp
-					noise/noise.cpp
-					ept/eptParser.cpp
-					ept/eptParser.cpp
-					math/math.cpp
-					math/math.cpp
-					collision/collision.cpp
-					collision/collision.cpp
-					timer/timer.cpp
-					timer/timer.cpp
-					profiler/profiler.cpp
-					profiler/profiler.cpp
-					graphics/graphics.cpp
-					graphics/graphics.cpp
-					graphics/imageManager.cpp
-					graphics/imageManager.cpp
-					input/input.cpp
-					input/input.cpp
-					input/inputState.cpp
-					input/inputState.cpp
-					tileMap/tileMap.cpp
-					tileMap/tileMap.cpp
-					tileMap/multilayerMap.cpp
-					tileMap/multilayerMap.cpp
-					tileMap/tileCamera.cpp
-					tileMap/tileCamera.cpp
-					animation/animation.cpp
-					animation/animation.cpp
-					sound/sound.cpp
-					sound/sound.cpp
-					tileMap/tileEditor.cpp
-					tileMap/tileEditor.cpp
-					tileMap/multilayerMapEditor.cpp
+Library libBase20 :
+animation/animation.cpp
+collision/collision.cpp
+graphics/graphics.cpp
+input/input.cpp
+input/inputState.cpp
+math/math.cpp
+noise/noise.cpp
+sound/sound.cpp
+timer/timer.cpp
+
+# Things that should get removed eventually
+dataStructures/pool.cpp
+dataStructures/quadTree.cpp
+ept/eptParser.cpp
+graphics/imageManager.cpp
+profiler/profiler.cpp
+
+tileMap/multilayerMap.cpp
+tileMap/multilayerMapEditor.cpp
+tileMap/tileCamera.cpp
+tileMap/tileEditor.cpp
+tileMap/tileMap.cpp
 
 # IMGUI
 dependencies/imgui/imgui.cpp
