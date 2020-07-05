@@ -1,0 +1,49 @@
+#+TITLE:Base2.0
+A simple game library and abstraction layer. It uses SFML to provide most functionality, then groups it together with other tools.
+
+* Setup
+
+
+** Clone repository
+Clone and init submodules for dependencies:
+
+#+BEGIN_SRC sh
+git clone --recurse-submodules https://github.com/makuto/spargus-vehicle-prototype
+#+END_SRC
+
+If you didn't do submodules, run this:
+
+#+BEGIN_SRC sh
+git submodule update --init --recursive
+#+END_SRC
+** Set up build system
+Jam is used to build the project. Install Jam:
+
+#+BEGIN_SRC sh
+sudo apt install jam
+#+END_SRC
+
+** Build dependencies
+Currently, SFML relies on system installs for its dependencies:
+
+#+BEGIN_SRC sh
+sudo apt install libopenal-dev libvorbis-dev libflac-dev libglew
+#+END_SRC
+
+Build the rest of the dependencies from source:
+
+#+BEGIN_SRC sh
+./BuildDependencies_Release.sh
+#+END_SRC
+
+Use the ~*_Debug.sh~ scripts if you want debug symbols. Note that you need to use Debug/Release scripts in every case, otherwise the libraries will fail to link.
+
+** Build example project
+The example project is a good starting point for a new project. Build it like so:
+
+#+BEGIN_SRC sh
+cd example
+./Build_Release.sh
+#+END_SRC
+
+Run ~./exampleBase~ to see the project.
