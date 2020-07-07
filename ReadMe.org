@@ -8,7 +8,7 @@ A simple game library and abstraction layer. It uses SFML to provide most functi
 Clone and init submodules for dependencies:
 
 #+BEGIN_SRC sh
-git clone --recurse-submodules https://github.com/makuto/spargus-vehicle-prototype
+git clone --recurse-submodules https://github.com/makuto/base2.0
 #+END_SRC
 
 If you didn't do submodules, run this:
